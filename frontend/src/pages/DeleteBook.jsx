@@ -3,11 +3,13 @@ import BackButton from '../components/BackButton';
 import Spinner from '../components/Spinner';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 
 const DeleteBook = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams(); // Correct usage of useParams hook
+  const { enqueueSnackbar} = useSnackbar();
 
   const handleDeleteBook = () => { // Fixed typo in function name
     if (window.confirm("Are you sure you want to delete this book?")) { // Optional confirmation dialog
@@ -16,11 +18,13 @@ const DeleteBook = () => {
         .delete(`http://localhost:5555/books/${id}`)
         .then(() => {
           setLoading(false);
+          enqueueSnackbar('Book Deleted Successfully.', {variant : 'success'})
           navigate('/');
         })
         .catch((error) => {
           setLoading(false);
-          alert('An error occurred. Please check the console.');
+          //alert('An error occurred. Please check the console.');
+        enqueueSnackbar('Error',{variant: 'error'})
           console.log(error);
         });
     }
