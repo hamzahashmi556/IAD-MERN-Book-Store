@@ -12,6 +12,7 @@ const DeleteBook = () => {
   const { enqueueSnackbar} = useSnackbar();
 
   const handleDeleteBook = () => { // Fixed typo in function name
+    if (window)
     if (window.confirm("Are you sure you want to delete this book?")) { // Optional confirmation dialog
       setLoading(true);
       axios
